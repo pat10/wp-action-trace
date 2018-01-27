@@ -30,7 +30,7 @@ function calevans_action_trace()
     /*
      * This is the main array we are using to hold the list of actions
      */
-	static $actions = [];
+	static $actions = array();
 
 
 
@@ -38,14 +38,15 @@ function calevans_action_trace()
      * Some actions are not going to be of interet to you. Add them into this 
      * array to exclude them. Remove the two default if you want to see them.
      */
-    $excludeActions = ['gettext','gettext_with_context'];
+    $excludeActions = array('gettext','gettext_with_context');
     $thisAction     = current_filter();
     $thisArguments  = func_get_args();
 
     if (!in_array( $thisAction, $excludeActions )) {
-        $actions[] = ['action'    => $thisAction,
+        //         $actions[] = ['action'    => $thisAction,
+        array_push ($actions, array('action'    => $thisAction,
 		              'time'      => microtime(true),
-		              'arguments' => print_r($thisArguments,true)];
+		              'arguments' => print_r($thisArguments,true)));
     }
 
 
@@ -60,7 +61,7 @@ function calevans_action_trace()
 }
 
 
-function calevans_format_debug_output($actions=[],$showArgs=false, $showTime=false)
+function calevans_format_debug_output($actions=array(),$showArgs=false, $showTime=false)
 {
    /*
      * Let's do a little formatting here.
